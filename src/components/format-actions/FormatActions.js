@@ -5,38 +5,25 @@ import HTMLFormatter from '../../utils/html-formatter';
 const actions = [
   {
     label: (<b>B</b>),
-    type: 'bold',
     isActive: selectedWord => HTMLFormatter.isBold(selectedWord),
+    applyFormat: HTMLFormatter.boldWord,
   },
   {
     label: (<i>I</i>),
-    type: 'italic',
     isActive: selectedWord => HTMLFormatter.isItalic(selectedWord),
+    applyFormat: HTMLFormatter.italicWord,
   },
   {
     label: (<u>U</u>),
-    type: 'underline',
     isActive: selectedWord => HTMLFormatter.isUnderline(selectedWord),
+    applyFormat: HTMLFormatter.underlineWord,
   }
 ];
 
 const FormatActions = props => {
-    const handleClick = type => {
+    const handleClick = applyFormat => {
         const { selectedWord, onWordUpdated } = props;
-        let newWord = null;
-        switch (type) {
-            case 'bold':
-                newWord = HTMLFormatter.boldWord(selectedWord);
-                break;
-            case 'italic':
-                newWord = HTMLFormatter.italicWord(selectedWord);
-                break;
-            case 'underline':
-                newWord = HTMLFormatter.underlineWord(selectedWord);
-                break;
-            default:
-                console.error('Type of format not supported');
-        }
+        let newWord = applyFormat(selectedWord);
         if (newWord) {
           onWordUpdated(newWord);
         }
@@ -52,7 +39,7 @@ const FormatActions = props => {
               }}
               className="format-action"
               type="button"
-              onClick={() => handleClick(action.type)}
+              onClick={() => handleClick(action.applyFormat)}
             >
               {action.label}
             </button>
