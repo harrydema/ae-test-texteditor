@@ -9,7 +9,13 @@
 
 #file {
     width: 600px;
+    padding: 10px;
     flex-grow: 1;
     background-color: #fff;
     border: 1px solid #e4dede;
+}
+
+#text {
+    height: 100%;
+    outline: none;
 }
